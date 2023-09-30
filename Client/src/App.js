@@ -12,6 +12,7 @@ import Board from './pages/Board';
 
 function App() {
   const [active, setActive] = useState('Home');
+  const [logIn, setLogIn] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,12 +27,21 @@ function App() {
     }
   }, [active, navigate]);
 
+  useEffect(() => {
+    const storageID = localStorage.getItem('ID');
+    if(storageID){
+      setLogIn(true);
+    } else {
+      setLogIn(false);
+    };
+  }, [logIn]);
+
   return (
     <>
-      <Navbar setActive={setActive} active={active} />
+      <Navbar setActive={setActive} active={active} logIn={logIn} setLogIn={setLogIn} />
       <Routes>
         <Route path='/' element={<Main/>} />
-        <Route path='/admin' element={<AdminPage/>} />
+        <Route path='/admin' element={<AdminPage setLogIn={setLogIn}/>} />
         <Route path='/notice' element={<Notice/>} />
         <Route path='/board' element={<Board/>} />
       </Routes>

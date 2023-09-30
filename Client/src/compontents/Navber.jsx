@@ -1,9 +1,19 @@
 import React from "react";
 import '../style/nav.css';
 
-export default function Navbar({setActive, active}){
+export default function Navbar({setActive, active, logIn, setLogIn}){
   const activeMenu = (menu) => {
     setActive(menu);
+  };
+
+  const handleLoginClick = () => {
+    if (logIn) {
+      localStorage.removeItem('ID');
+      setLogIn(false);
+      activeMenu('Home');
+    } else {
+      activeMenu('Login');
+    }
   };
 
   return (
@@ -15,7 +25,7 @@ export default function Navbar({setActive, active}){
         <li onClick={() => activeMenu('Home')} style={{fontWeight : active === 'Home' ? 700 : 400}}>Home</li>
         <li onClick={() => activeMenu('Notice')} style={{fontWeight : active === 'Notice' ? 700 : 400}}>Notice</li>
         <li onClick={() => activeMenu('Board')} style={{fontWeight : active === 'Board' ? 700 : 400}}>Board</li>
-        <li onClick={() => activeMenu('Login')} style={{fontWeight : active === 'Login' ? 700 : 400}}>Login</li>
+        <li onClick={() => handleLoginClick()} style={{fontWeight : active === 'Login' ? 700 : 400}}>{logIn ? 'Logout' : 'Login'}</li>
       </ul>
     </div>
   );

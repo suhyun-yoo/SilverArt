@@ -1,24 +1,26 @@
-// AdminPage.jsx
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 export default function AdminPage() {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
-  const [loginResult, setLoginResult] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = () => {
     axios.post('http://localhost:5000/admin/login', { id, password })
       .then(res => {
-        if (res.data === "success") {
-          setLoginResult("로그인 성공");
+        if (res.data.login === "success") {
+          alert('로그인 성공');
+          localStorage.setItem('ID', res.data.id);
+          navigate('/');
         } else {
-          setLoginResult("로그인 실패");
+          alert('로그인 실패');
         }
       })
       .catch(error => {
         console.error('로그인 요청 오류:', error);
-        setLoginResult("로그인 실패");
+        alert("로그인 실패");
       });
   };
 
@@ -33,8 +35,6 @@ export default function AdminPage() {
       </div>
 
       <button onClick={handleLogin}> Login </button>
-
-      {loginResult && <p>{loginResult}</p>}
     </div>
   );
 };
