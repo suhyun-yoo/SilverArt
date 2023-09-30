@@ -1,7 +1,6 @@
 import React from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import './App.css';
-
+import './style/reset.css';
 import AdminPage from './pages/AdminPage';
 import Main from './pages/Main';
 
