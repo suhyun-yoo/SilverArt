@@ -1,41 +1,40 @@
-import React, { useState, useEffect } from "react";
+// AdminPage.jsx
+import React, { useState } from "react";
 import axios from 'axios';
 
 export default function AdminPage() {
-  const [users, setUsers] = useState([]);
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+  const [loginResult, setLoginResult] = useState("");
 
-  useEffect(() => {
-    axios.get('http://localhost:5000/admin/login')
-    .then(res => {
-        setUsers(res.data);
+  const handleLogin = () => {
+    axios.post('http://localhost:5000/admin/login', { id, password })
+      .then(res => {
+        if (res.data === "success") {
+          setLoginResult("로그인 성공");
+        } else {
+          setLoginResult("로그인 실패");
+        }
       })
       .catch(error => {
-        console.error('사용자 정보 조회 오류:', error);
+        console.error('로그인 요청 오류:', error);
+        setLoginResult("로그인 실패");
       });
-  }, []);
-
+  };
 
   return (
     <div>
       <h1>Admin Page</h1>
       <div>
         <label htmlFor="id"> ID </label>
-        <input type="text" id="id" />
+        <input type="text" id="id" value={id} onChange={(e) => setId(e.target.value)} />
         <label htmlFor="pw">Password</label>
-        <input type="password" id="pw" />
+        <input type="password" id="pw" value={password} onChange={(e) => setPassword(e.target.value)} />
       </div>
 
-      <button> Login </button>
+      <button onClick={handleLogin}> Login </button>
 
-      {users && 
-        <ul>
-        {users.map(user => (
-          <li key={user.id}>
-            ID: {user.username}, Password: {user.password}
-          </li>
-        ))}
-      </ul>
-      }
+      {loginResult && <p>{loginResult}</p>}
     </div>
-  )
+  );
 };

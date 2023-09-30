@@ -1,8 +1,7 @@
 const express = require('express');
-const cors = require('cors'); // cors 패키지를 불러옵니다.
-const sqlite3 = require('sqlite3').verbose(); // SQLite 패키지를 불러옵니다.
-const fs = require('fs'); // 파일 시스템 모듈을 불러옵니다.
-
+const cors = require('cors');
+const sqlite3 = require('sqlite3').verbose();
+const fs = require('fs'); 
 const app = express();
 const port = process.env.PORT || 5000;
 app.use(cors());
@@ -28,28 +27,40 @@ const db = new sqlite3.Database('mydatabase.db', (err) => {
 // Express 미들웨어 설정 및 라우트 등록
 app.use(express.json());
 
-// 관리자 비밀번호 수정 엔드포인트
-// 서버 측 코드 (server.js)
-app.get('/admin/login', (req, res) => {
-  // 여기에서 모든 사용자 정보를 조회하고 클라이언트로 전송하는 로직을 추가
-  // 예제로는 SQLite 데이터베이스에서 사용자 정보를 조회하는 코드를 작성합니다.
-  db.all('SELECT * FROM Users', (err, users) => {
+// Http 통신
+// 1. admin 계정 로그인 확인
+app.post('/admin/login', (req, res) => {
+  const { id, password } = req.body;
+
+  db.all('SELECT * FROM Users WHERE username = ? AND password = ?', [id, password], (err, users) => {
     if (err) {
       console.error('사용자 정보 조회 오류:', err.message);
       res.status(500).json({ error: '사용자 정보 조회 오류' });
     } else {
-      res.json(users); // 모든 사용자 정보를 JSON 형태로 클라이언트에게 응답
+      if (users.length > 0) {
+        res.json("success");
+      } else {
+        res.json("fail");
+      }
     }
   });
 });
 
+// 2. admin 계정 업데이트
 app.post('/api/admin/updatePassword', (req, res) => {
   const { newPassword } = req.body;
-  
-  // 여기에서 newPassword를 기존 관리자 계정의 비밀번호로 업데이트하는 로직 추가
-
   res.json({ message: '비밀번호가 업데이트되었습니다.' });
 });
+
+// 3. 게시글
+// 3-1. 게시글 작성
+// 3-2. 게시글 수정
+// 3-3. 게시글 삭제
+
+// 4. 댓글 작성
+// 4-1. 댓글 작성
+// 4-2. 댓글 수정
+// 4-3. 댓글 삭제
 
 // Express 서버 시작
 app.listen(port, () => {

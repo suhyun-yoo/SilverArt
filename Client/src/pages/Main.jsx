@@ -1,9 +1,12 @@
 import React from "react";
+import '../style/main.css';
 
 export default function Main() {
   return (
-    <>
-      <p>Main</p>
-    </>
+    <div className="main-wrap">
+      <div className="banner">
+        
+      </div>
+    </div>
   )
 };
