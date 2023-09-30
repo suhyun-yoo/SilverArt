@@ -2,8 +2,8 @@ import React from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import './App.css';
 
-import AdminPage from './compontents/AdminPage';
-import Main from './compontents/Main';
+import AdminPage from './pages/AdminPage';
+import Main from './pages/Main';
 
 function App() {
   return (
