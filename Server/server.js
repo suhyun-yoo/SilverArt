@@ -77,6 +77,18 @@ app.delete('/board/delete/:boardID', (req, res) => {
   res.json({ message: '게시글이 삭제되었습니다.' });
 });
 
+// 3-4. 게시글 조회
+app.get('/board', (req, res) => {
+  db.all('SELECT Posts.id, Posts.title, Posts.content, Users.user_name AS author_username, Posts.created_at FROM Posts JOIN Users ON Posts.author_username = Users.user_name', (err, rows) => {
+    if (err) {
+      console.error(err.message); // 에러 메시지를 서버 콘솔에 출력
+      return res.status(500).json({ error: err.message }); // 더 자세한 오류 메시지를 클라이언트에게 반환
+    }
+
+    // 결과를 클라이언트에게 보냄
+    res.json({ posts: rows });
+  });
+});
 
 // 4. 댓글 작성
 // 4-1. 댓글 작성
