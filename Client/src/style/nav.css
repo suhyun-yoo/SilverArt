@@ -10,6 +10,7 @@
 .nav-wrap .logo{
   width: 150px;
   height: 100%;
+  cursor: pointer;
 }
 .nav-wrap .logo img{
   object-fit: contain;
