@@ -49,7 +49,7 @@ export default function NoticePost(){
       {location.state ? (
         <>
           <input type="text" className="notice-title" placeholder="제목을 입력하세요" id="title" defaultValue={location.state.title && location.state.title}/>
-          <textarea className="notice-content"  id="content"cols="30" rows="10" placeholder="내용을 입력하세요" defaultValue={location.state.content && location.state.content}/>
+          <textarea className="notice-content"  id="content"cols="30" rows="10" placeholder="내용을 입력하세요" defaultValue={location.state.content && location.state.content.replace(/<br\/>/g, "\n")} />
         </>
       ) : (
         <>
