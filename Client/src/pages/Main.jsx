@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import '../style/main.css';
 import axios from "axios";
 
 export default function Main({setActive}) {
   const [slideIndex, setSlideIndex] = useState(0);
   const [boardData, setBoardData] = useState();
+  const [noticeData, setNoticeData] = useState();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const autoSlide = () => {
@@ -24,8 +27,32 @@ export default function Main({setActive}) {
     axios.get('http://localhost:5000/board')
       .then(res => {
         setBoardData(res.data.posts.reverse());
-      });
+      })
+      .catch(error => console.error(error));
+
+    axios.get('http://localhost:5000/notice')
+      .then(res => {
+        setNoticeData(res.data.notices.reverse());
+      })
+      .catch(error => console.error(error));
   }, []);
+
+  const handleClick = (data) => { 
+    setActive('Notice');
+    navigate("/noticeDetail/" + data.id ,
+      {state: data}    
+    )
+  };
+
+  const navigatePage = (locate) => {
+    if(locate === 'Notice'){
+      setActive('Notice');
+      navigate('/notice');
+    } else if(locate === 'Board'){
+      setActive('Board');
+      navigate('/board');
+    }
+  };
 
   return (
     <div className="main-wrap">
@@ -47,7 +74,7 @@ export default function Main({setActive}) {
       <div className="board">
         <div className="txtBox">
           <p title="게시판 바로가기" onClick={() => setActive('Board')}> Gallery </p>
-          <h2> 게시판을 확인해보세요</h2>
+          <h2> 최근 게시글을 확인해보세요</h2>
         </div>
         <div className="board-slider-wrap">
           <div className="board-sliders">
@@ -72,6 +99,7 @@ export default function Main({setActive}) {
             )})}
           </div>
         </div>
+        <p className="go-detail" onClick={() => navigatePage('Board')}> 게시판 바로가기 </p>
       </div>
 
       {/* 3. notice */}
@@ -79,8 +107,19 @@ export default function Main({setActive}) {
         <div className="txtBox">
         <p title="공지사항 바로가기" onClick={() => setActive('Notice')}> Notice </p>
           <h2>공지사항을 확인해주세요</h2>
+          <p>전체 <b>{noticeData && noticeData.length}</b>개</p>
         </div>
-        <div className="notice"></div>
+        <div className="notice-wrap">
+          {noticeData && noticeData.slice(0,5).map((notice) => {
+            return (
+              <div key={notice.id} className="notice-data" onClick={() => handleClick(notice)}>
+                <p>{notice.title}</p>
+                <span>{notice.created_at && notice.created_at.split(' ')[0]}</span>
+              </div>
+            )
+          })}
+        </div>
+        <p className="go-detail" onClick={() => navigatePage('Notice')}> 공지사항 바로가기 </p>
       </div>
 
       {/* 4. intoduce */}

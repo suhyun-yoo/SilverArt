@@ -2,12 +2,11 @@
   width: 100%;
   height: fit-content;
   min-height: 100vh;
-  padding: 0 100px;
+  padding: 100px;
 }
 
 /* 1. banner */
 .main-wrap .banner{
-  margin-top: 100px;
   width: 100%;
   height: 70vh;
   overflow: hidden;
@@ -35,6 +34,19 @@
 }
 .main-wrap .banner .banner-slider-wrap .slider:nth-child(3){
   background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* 공통 스타일링 */
+.main-wrap .go-detail{
+  padding: 10px;
+  text-align: end;
+  color: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: .3s;
+}
+.main-wrap .go-detail:hover{
+  text-decoration: underline;
 }
 
 /* 2. board */
@@ -66,9 +78,14 @@
   width: calc(12.5% - 20px);
   margin: 0 10px;
   padding: 15px;
-  border: 1px solid rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   position: relative;
+  cursor: pointer;
+  transition: .3s;
+}
+.main-wrap .board .board-slider-wrap .board-sliders .board-slider:hover{
+  border: 1px solid rgba(0, 0, 0, 0.5);
 }
 .main-wrap .board .board-slider-wrap .board-sliders .board-slider .new{
   position: absolute;
@@ -123,4 +140,39 @@
   border-radius: 50%;
   margin: 0 3px;
   cursor: pointer;
+}
+
+/* 3. notice */
+.main-wrap .notice{
+  width: 100%;
+  height: fit-content;
+}
+.main-wrap .notice .notice-wrap{
+  width: 100%;
+  height: fit-content;
+  margin-top: 20px;
+}
+.main-wrap .notice .notice-wrap .notice-data{
+  margin: 5px 0;
+  width: 100%;
+  height: 50px;
+  padding: 15px 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: .3s;
+}
+.main-wrap .notice .notice-wrap .notice-data:hover{
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+}
+.main-wrap .notice .notice-wrap .notice-data p{
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+.main-wrap .notice .notice-wrap .notice-data span{
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.5);
 }

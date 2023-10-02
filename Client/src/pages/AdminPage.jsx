@@ -1,16 +1,19 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
-export default function AdminPage() {
+export default function AdminPage({setActive}) {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = () => {
     axios.post('http://localhost:5000/admin/login', { id, password })
       .then(res => {
         if (res.data.login === "success") {
           alert('로그인 성공');
-          window.location.reload();
+          setActive('Home');
+          navigate('/');
           localStorage.setItem('token', res.data.token);
         } else {
           alert('로그인 실패');

@@ -32,8 +32,7 @@ app.use(express.json());
 // 1. admin 계정 로그인 확인 및 토큰 발급
 app.post('/admin/login', (req, res) => {
   const { id, password } = req.body;
-
-  db.all('SELECT * FROM Users WHERE username = ? AND password = ?', [id, password], (err, users) => {
+  db.all('SELECT * FROM Users WHERE user_id = ? AND password = ?', [id, password], (err, users) => {
     if (err) {
       console.error('사용자 정보 조회 오류:', err.message);
       res.status(500).json({ error: '사용자 정보 조회 오류' });
@@ -81,8 +80,8 @@ app.delete('/board/delete/:boardID', (req, res) => {
 app.get('/board', (req, res) => {
   db.all('SELECT Posts.id, Posts.title, Posts.content, Users.user_name AS author_username, Posts.created_at FROM Posts JOIN Users ON Posts.author_username = Users.user_name', (err, rows) => {
     if (err) {
-      console.error(err.message); // 에러 메시지를 서버 콘솔에 출력
-      return res.status(500).json({ error: err.message }); // 더 자세한 오류 메시지를 클라이언트에게 반환
+      console.error(err.message);
+      return res.status(500).json({ error: err.message }); 
     }
 
     // 결과를 클라이언트에게 보냄
@@ -113,8 +112,75 @@ app.delete('/comments/delete/:commentId', (req, res) => {
   res.json({ message: '댓글이 삭제되었습니다.' });
 });
 
+// 4-4. 댓글 조회
+app.get('/comments/:post_id', (req, res) => {
+  const post_id = req.params.post_id;
+  // post_id에 해당하는 게시글의 댓글을 조회하는 코드 추가
+  res.json({ message: '댓글을 조회합니다.' });
+});
+
+// 5. 공지사항
+// 5-1. 공지사항 작성
+app.post('/notice/write', (req, res) => {
+  const { title, content, author_id } = req.body;
+
+  db.run(
+    'INSERT INTO Notice (title, content, author_username) VALUES (?, ?, ?)',
+    [title, content, author_id],
+    (err) => {
+      if (err) {
+        console.error('공지사항 작성 오류:', err.message);
+        res.status(500).json({ error: '공지사항 작성 오류' });
+      } else {
+        res.json({ result: 'success' });
+      }
+    }
+  );
+});
+
+// 5-2. 공지사항 수정
+app.put('/notice/update/:noticeId', (req, res) => {
+  const noticeId = req.params.noticeId;
+  const { title, content, author_id } = req.body;
+
+  const sql = 'UPDATE Notice SET title = ?, content = ?, author_username = ? WHERE id = ?';
+  db.run(sql, [title, content, author_id, noticeId], function(err) {
+    if (err) {
+      console.error('공지사항 업데이트 오류:', err.message);
+      res.status(500).json({ error: '공지사항 업데이트 오류' });
+    } else {
+      res.json({ result: 'success' });
+    }
+  });
+});
+
+// 5-3. 공지사항 삭제
+app.delete('/notice/delete/:noticeId', (req, res) => {
+  const noticeId = req.params.noticeId;
+  db.run('DELETE FROM Notice WHERE id = ?', noticeId, (err) => {
+    if (err) {
+      console.error('공지사항 삭제 오류:', err.message);
+      res.status(500).json({ error: '공지사항 삭제 오류' });
+    } else {
+      res.json({ result : 'success' });
+    }
+  });
+});
+
+// 5-4. 공지사항 조회
+app.get('/notice', (req, res) => {
+  db.all('SELECT Notice.id, Notice.title, Notice.content, Users.user_name AS author_username, Notice.created_at FROM Notice JOIN Users ON Notice.author_username = Users.user_name', (err, rows) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).json({ error: err.message }); 
+    }
+
+    res.json({ notices: rows });
+  });
+});
 
 // Express 서버 시작
 app.listen(port, () => {
   console.log(`서버가 http://localhost:${port} 에서 실행 중입니다.`);
 });
+

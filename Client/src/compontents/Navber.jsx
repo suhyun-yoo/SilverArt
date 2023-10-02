@@ -1,9 +1,20 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import '../style/nav.css';
 
 export default function Navbar({setActive, active, logIn, setLogIn}){
+  const navigate = useNavigate();
   const activeMenu = (menu) => {
     setActive(menu);
+    if(menu === 'Home'){
+      navigate('/');
+    } else if(menu === 'Notice'){
+      navigate('/notice');
+    } else if(menu === 'Board'){
+      navigate('/board');
+    } else if (menu === 'Login') {
+      navigate('/admin');
+    }
   };
 
   const handleLoginClick = () => {
