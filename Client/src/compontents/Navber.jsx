@@ -18,7 +18,7 @@ export default function Navbar({setActive, active, logIn, setLogIn}){
 
   return (
     <div className="nav-wrap">
-      <div className="logo">
+      <div className="logo" onClick={() => activeMenu('Home')}>
         <img src="http://www.진로체험.kr/design/default/images/logo.jpg" alt="logo" />
       </div>
       <ul className="nav">
