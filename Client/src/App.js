@@ -28,7 +28,7 @@ function App() {
   }, [active, navigate]);
 
   useEffect(() => {
-    const storageID = localStorage.getItem('ID');
+    const storageID = localStorage.getItem('token');
     if(storageID){
       setLogIn(true);
     } else {

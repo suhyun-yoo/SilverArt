@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const sqlite3 = require('sqlite3').verbose();
 const fs = require('fs'); 
+const jwt = require('jsonwebtoken');
 const app = express();
 const port = process.env.PORT || 5000;
 app.use(cors());
@@ -28,7 +29,7 @@ const db = new sqlite3.Database('mydatabase.db', (err) => {
 app.use(express.json());
 
 // Http 통신
-// 1. admin 계정 로그인 확인
+// 1. admin 계정 로그인 확인 및 토큰 발급
 app.post('/admin/login', (req, res) => {
   const { id, password } = req.body;
 
@@ -38,7 +39,8 @@ app.post('/admin/login', (req, res) => {
       res.status(500).json({ error: '사용자 정보 조회 오류' });
     } else {
       if (users.length > 0) {
-        res.json({login : "success", id : id});
+        const token = jwt.sign({ id: id }, 'your_secret_key', { expiresIn: '1h' });
+        res.json({ login: "success", token: token });
       } else {
         res.json("fail");
       }

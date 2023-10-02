@@ -8,7 +8,7 @@ export default function Navbar({setActive, active, logIn, setLogIn}){
 
   const handleLoginClick = () => {
     if (logIn) {
-      localStorage.removeItem('ID');
+      localStorage.removeItem('token');
       setLogIn(false);
       activeMenu('Home');
     } else {
