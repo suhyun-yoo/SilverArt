@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import '../style/nav.css';
 
-export default function Navbar({setActive, active, logIn, setLogIn}){
+export default function Navbar({setActive, active, logIn, setLogIn, setShowModal}){
   const navigate = useNavigate();
   const activeMenu = (menu) => {
     setActive(menu);
@@ -13,7 +13,7 @@ export default function Navbar({setActive, active, logIn, setLogIn}){
     } else if(menu === 'Board'){
       navigate('/board');
     } else if (menu === 'Login') {
-      navigate('/admin');
+      setShowModal(true);
     }
   };
 
