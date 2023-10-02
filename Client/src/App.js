@@ -11,10 +11,14 @@ import Notice from './pages/Notice';
 import Board from './pages/Board';
 
 function App() {
-  const [active, setActive] = useState('Home');
+  const [active, setActive] = useState(localStorage.getItem('active') || 'Home');
   const [logIn, setLogIn] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    localStorage.setItem('active', active);
+  }, [active]);
+  
   useEffect(() => {
     if(active === 'Home'){
       navigate('/');
@@ -40,7 +44,7 @@ function App() {
     <>
       <Navbar setActive={setActive} active={active} logIn={logIn} setLogIn={setLogIn} />
       <Routes>
-        <Route path='/' element={<Main/>} />
+        <Route path='/' element={<Main setActive={setActive}/>} />
         <Route path='/admin' element={<AdminPage setLogIn={setLogIn}/>} />
         <Route path='/notice' element={<Notice/>} />
         <Route path='/board' element={<Board/>} />

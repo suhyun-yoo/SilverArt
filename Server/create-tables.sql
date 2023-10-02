@@ -33,6 +33,18 @@ INSERT INTO Users (user_id, user_name, password) VALUES
 
 INSERT INTO Posts (title, content, author_username) VALUES
 ('첫 번째 게시글', '게시글 내용입니다.', 'leejjin');
+INSERT INTO Posts (title, content, author_username) VALUES
+('두 번째 게시글', '게시글 내용입니다.', 'leejjin');
+INSERT INTO Posts (title, content, author_username) VALUES
+('세 번째 게시글', '게시글 내용입니다.', 'leejjin');
+INSERT INTO Posts (title, content, author_username) VALUES
+('네 번째 게시글', '게시글 내용입니다.', 'leejjin');
+INSERT INTO Posts (title, content, author_username) VALUES
+('다섯 번째 게시글', '게시글 내용입니다.', 'leejjin');
+INSERT INTO Posts (title, content, author_username) VALUES
+('여섯 번째 게시글', '게시글 내용입니다.', 'leejjin');
+INSERT INTO Posts (title, content, author_username) VALUES
+('일곱 번째 게시글', '게시글 내용입니다.', 'leejjin');
 
 INSERT INTO Comments (post_id, content, author_username) VALUES
 (1, '댓글 내용입니다.', 'leejjin');

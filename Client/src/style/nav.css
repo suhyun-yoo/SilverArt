@@ -6,6 +6,10 @@
   align-items: center;
   padding: 0 50px;
   z-index: 10;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #fff;
 }
 .nav-wrap .logo{
   width: 150px;

@@ -7,7 +7,7 @@
 
 /* 1. banner */
 .main-wrap .banner{
-  margin-top: 50px;
+  margin-top: 100px;
   width: 100%;
   height: 70vh;
   overflow: hidden;
@@ -42,5 +42,85 @@
   width: 100%;
   height: fit-content;
   margin: 100px 0;
-  background-color: rebeccapurple;
+}
+.main-wrap .board .txtBox{
+  width: 100%;
+  height: fit-content;
+  margin-bottom: 30px;
+}
+.main-wrap .board .txtBox p{
+  cursor: pointer;
+}
+.main-wrap .board .board-slider-wrap{
+  width: 100%;
+  height: fit-content;
+  overflow: hidden;
+}
+.main-wrap .board .board-slider-wrap .board-sliders{
+  width: 200%;
+  height: 100%;
+  display: flex;
+}
+.main-wrap .board .board-slider-wrap .board-sliders .board-slider{
+  height: 400px;
+  width: calc(12.5% - 20px);
+  margin: 0 10px;
+  padding: 15px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  position: relative;
+}
+.main-wrap .board .board-slider-wrap .board-sliders .board-slider .new{
+  position: absolute;
+  top: 30px;
+  left: 15px;
+  padding: 3px 10px;
+  background-color: orange;
+}
+.main-wrap .board .board-slider-wrap .board-sliders .board-slider .top{
+  width: 100%;
+  height: 60%;
+  border-radius: 10px;
+  background-color: lightgray;
+}
+.main-wrap .board .board-slider-wrap .board-sliders .board-slider .bottom{
+  width: 100%;
+  height: 40%;
+  padding: 10px 5px;
+  position: relative;
+}
+.main-wrap .board .board-slider-wrap .board-sliders .board-slider .bottom .title{
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+.main-wrap .board .board-slider-wrap .board-sliders .board-slider .bottom .content{
+  font-size: 1rem;
+  font-weight: 500;
+  width: 100%;
+  height: 70px;
+  overflow: hidden;
+}
+.main-wrap .board .board-slider-wrap .board-sliders .board-slider .bottom .date{
+  text-align: end;
+  color: gray;
+  font-size: 0.9rem;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+.main-wrap .board .btnBox{
+  width: 50px;
+  height: 20px;
+  margin: 10px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.main-wrap .board .btnBox .btn{
+  width: 8px;
+  height: 8px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  margin: 0 3px;
+  cursor: pointer;
 }
