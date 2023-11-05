@@ -149,10 +149,19 @@ app.put('/notice/update/:noticeId', (req, res) => {
       console.error('공지사항 업데이트 오류:', err.message);
       res.status(500).json({ error: '공지사항 업데이트 오류' });
     } else {
-      res.json({ result: 'success' });
+      const selectSql = 'SELECT * FROM Notice WHERE id = ?';
+      db.get(selectSql, [noticeId], (err, row) => {
+        if (err) {
+          console.error('공지사항 조회 오류:', err.message);
+          res.status(500).json({ error: '공지사항 조회 오류' });
+        } else {
+          res.json({ result: 'success',noticeID : noticeId, noticeData: row });
+        }
+      });
     }
   });
 });
+
 
 // 5-3. 공지사항 삭제
 app.delete('/notice/delete/:noticeId', (req, res) => {

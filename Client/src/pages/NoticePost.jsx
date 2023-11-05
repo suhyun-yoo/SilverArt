@@ -34,9 +34,10 @@ export default function NoticePost(){
       
       axios.put(`http://localhost:5000/notice/update/${location.state.id}`, putData)
         .then(res => {
-          console.log(res.data);
           if(res.data.result === 'success'){
-            navigate('/notice');
+            navigate("/noticeDetail/" + res.data.noticeID,
+              {state: res.data.noticeData}    
+            )
           }
         })
         .catch(error => console.error(error));
